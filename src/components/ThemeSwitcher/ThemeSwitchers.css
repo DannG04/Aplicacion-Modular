@@ -1,0 +1,20 @@
+.theme-switcher-btn {
+  background-color: transparent;
+  border: 1px solid transparent; /* Ocultamos borde */
+  color: inherit; /* Hereda el color del texto (blanco o negro) */
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%; /* Lo hace circular */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Posicionarlo en la esquina */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.theme-switcher-btn:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+}

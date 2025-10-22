@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.App {
+  text-align: center;
+  background-color: #ffffff; /* Modo Claro por defecto */
+  color: #282c34;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos del Modo Oscuro */
+.App.dark {
+  background-color: #282c34;
+  color: #ffffff;
+}
+
+/* Puedes hacer lo mismo para otros componentes */
+.App.dark .app-header {
+  background-color: #20232a;
+}
+
+.App.dark .user-card {
+  background-color: #3a3f4b;
+  border-color: #555;
+}
+
+.App.dark .user-card h3 {
+  color: #f1f1f1;
+}
+
+.theme-switcher {
+  padding: 10px 15px;
+  margin: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}

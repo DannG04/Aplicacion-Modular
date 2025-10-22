@@ -1,0 +1,51 @@
+.app-header {
+  background-image: url('fondo.jpg');
+  padding: 20px;
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.app-header {
+  /* ... (estilos existentes) ... */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a { /* <Link> se renderiza como una <a>, así que podemos estilizarla */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color 0.2s;
+}
+
+nav a:hover {
+  border-bottom-color: #61dafb; /* Color azul de React */
+}

@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import React, { useContext } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import ThemeContext from './context/ThemeContext';
+
+// Importar el Layout y las Páginas
+import Layout from './components/Layout/Layout';
+import Home from './components/Home/Home';
+import TodoList from './components/TodoList/TodoList';
+import UserDirectory from './components/UserDirectory/UserDirectory';
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${theme}`}>
+      {/* El componente <Routes> envuelve todas las rutas */}
+      <Routes>
+        {/* Esta es una "Ruta de Layout".
+          Todas las rutas anidadas dentro se renderizarán DENTRO del <Outlet /> de Layout.
+        */}
+        <Route path="/" element={<Layout />}>
+
+          {/* Rutas Hijas */}
+          <Route index element={<Home />} />
+          <Route path="tareas" element={<TodoList />} />
+          <Route path="directorio" element={<UserDirectory />} />
+
+          {/* Ruta "Catch-all" para 404 (No encontrado) */}
+          <Route path="*" element={<h2>Página no encontrada</h2>} />
+        </Route>
+      </Routes>
     </div>
   );
 }

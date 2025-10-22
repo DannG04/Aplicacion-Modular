@@ -1,0 +1,43 @@
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+/* Estilo cuando el tema es oscuro */
+.App.dark .todo-item {
+  background-color: #3a3f4b;
+  border-color: #555;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-text {
+  font-size: 1.1em;
+}
+
+.todo-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 4px;
+}
+.delete-btn:hover {
+  background-color: rgba(255, 77, 77, 0.1);
+}
