@@ -1,50 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TodoList.css';
 import TodoItem from '../TodoItem/TodoItem'; // <-- Importar el hijo
-
+import { db } from '../../firebaseConfig'; // <-- Importa nuestra config
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore"; // <-- Importa funciones de Firestore
+import { taskService } from '../../services/taskService'; // <-- Importar el servicio
 const TodoList = () => {
-  // Estado 'tasks' ahora necesita saber si está completo
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Aprender React', isComplete: true },
-    { id: 2, text: 'Construir una App', isComplete: false },
-    { id: 3, text: 'Modularizar componentes', isComplete: false }
-  ]);
-
+  // El estado 'tasks' ahora empieza vacío
+  const [tasks, setTasks] = useState([]); 
   const [inputValue, setInputValue] = useState('');
 
-  const handleAddTask = (e) => {
+  // --- LEER TAREAS (GET) ---
+  // useEffect se ejecutará cuando el componente se monte
+  useEffect(() => {
+    // 1. Creamos una referencia a nuestra colección "tasks" en Firestore
+    const collectionRef = collection(db, "tasks");
+
+    // 2. Creamos una consulta (query) para ordenar las tareas por fecha
+    const q = query(collectionRef, orderBy("createdAt", "asc"));
+
+    // 3. onSnapshot es el ¡ESCUCHADOR EN TIEMPO REAL!
+    // Se dispara una vez al inicio y luego CADA VEZ que los datos cambian
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const newTasks = [];
+      querySnapshot.forEach((doc) => {
+        newTasks.push({ 
+          ...doc.data(), 
+          id: doc.id // El ID del documento es importante
+        });
+      });
+      setTasks(newTasks); // Actualizamos nuestro estado de React
+    });
+
+    // Esta función de limpieza se ejecuta cuando el componente se "desmonta"
+    // Evita fugas de memoria
+    return () => unsubscribe();
+
+  }, []); // El '[]' asegura que esto se ejecute solo una vez
+
+
+
+  const handleAddTask = async (e) => { // La hacemos 'async'
     e.preventDefault();
     if (inputValue.trim() === '') return;
 
-    const newTask = {
-      id: Date.now(),
-      text: inputValue,
-      isComplete: false // Nueva propiedad
-    };
-
-    // Usamos '.concat' o '...' para inmutabilidad
-    setTasks(tasks.concat(newTask)); 
-    setInputValue('');
+    try {
+      // Usamos el servicio de tareas
+      await taskService.addTask(inputValue.trim());
+      setInputValue('');
+      // NOTA: No necesitamos 'setTasks' aquí.
+      // ¡'onSnapshot' detectará el nuevo documento y actualizará el estado por nosotros!
+    } catch (error) {
+      console.error('Error agregando tarea:', error);
+      alert('Error al agregar la tarea. Inténtalo de nuevo.');
+    }
   };
 
   // --- NUEVAS FUNCIONES ---
 
   // Función para marcar/desmarcar una tarea
-  const handleToggleComplete = (idToToggle) => {
-    setTasks(
-      tasks.map(task => 
-        task.id === idToToggle 
-          ? { ...task, isComplete: !task.isComplete } // Crea un nuevo objeto
-          : task // Devuelve el objeto original
-      )
-    );
+  const handleToggleComplete = async (task) => { // Pasamos el objeto 'task' entero
+    try {
+      await taskService.toggleTaskComplete(task);
+    } catch (error) {
+      console.error('Error cambiando estado de tarea:', error);
+      alert('Error al cambiar el estado de la tarea. Inténtalo de nuevo.');
+    }
   };
 
   // Función para eliminar una tarea
-  const handleDeleteTask = (idToDelete) => {
-    setTasks(
-      tasks.filter(task => task.id !== idToDelete)
-    );
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await taskService.deleteTask(taskId);
+    } catch (error) {
+      console.error('Error eliminando tarea:', error);
+      alert('Error al eliminar la tarea. Inténtalo de nuevo.');
+    }
   };
 
   // --- RENDER ACTUALIZADO ---
@@ -64,16 +94,13 @@ const TodoList = () => {
       </form>
 
       <ul>
-        {/* Aquí está la magia: 
-          Mapeamos las tareas y por cada una, renderizamos un <TodoItem />
-          pasándole los datos y las FUNCIONES como props.
-        */}
         {tasks.map(task => (
           <TodoItem 
             key={task.id}
             task={task}
-            onToggleComplete={handleToggleComplete}
-            onDeleteTask={handleDeleteTask}
+            // ¡Pasa la función correctamente!
+            onToggleComplete={() => handleToggleComplete(task)} // Pasa el objeto 'task'
+            onDeleteTask={handleDeleteTask} // Esta ya pasaba solo el ID
           />
         ))}
       </ul>

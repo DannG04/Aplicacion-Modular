@@ -15,6 +15,7 @@ const Header = () => {
             {/* Usamos <Link> en lugar de <a href=""> */}
             <Link to="/" >Inicio</Link>
             <Link to="/tareas">Tareas</Link>
+            <Link to="/historial">Histórico</Link>
             <Link to="/directorio">Directorio</Link>
           </nav>
         </div>

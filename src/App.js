@@ -7,6 +7,7 @@ import ThemeContext from './context/ThemeContext';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import TodoList from './components/TodoList/TodoList';
+import TaskHistory from './components/TaskHistory/TaskHistory';
 import UserDirectory from './components/UserDirectory/UserDirectory';
 import PageNotFound from './components/PageNotFound/PageNotFound.js';
 
@@ -25,6 +26,7 @@ function App() {
           {/* Rutas Hijas */}
           <Route index element={<Home />} />
           <Route path="tareas" element={<TodoList />} />
+          <Route path="historial" element={<TaskHistory />} />
           <Route path="directorio" element={<UserDirectory />} />
 
           {/* Ruta "Catch-all" para 404 (No encontrado) */}

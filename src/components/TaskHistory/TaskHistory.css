@@ -1,0 +1,144 @@
+.task-history-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.task-history-container h2 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.task-history-loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-color);
+  font-style: italic;
+}
+
+.no-history {
+  text-align: center;
+  color: var(--text-color);
+  opacity: 0.7;
+  padding: 40px;
+  font-style: italic;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.history-item {
+  background: var(--card-background, #ffffff);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.history-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.history-item.action-completed {
+  border-left-color: #28a745;
+}
+
+.history-item.action-deleted {
+  border-left-color: #dc3545;
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.action-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.action-badge.action-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.action-badge.action-deleted {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.history-date {
+  color: var(--text-color);
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.history-item-content {
+  color: var(--text-color);
+}
+
+.task-text {
+  font-weight: 500;
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-item {
+  font-size: 0.85em;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .task-history-container {
+    padding: 15px;
+  }
+  
+  .history-item {
+    padding: 12px;
+  }
+  
+  .history-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .task-details {
+    gap: 3px;
+  }
+}
+
+/* Dark theme support */
+[data-theme="dark"] .history-item {
+  background: var(--card-background, #2d3748);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .action-badge.action-completed {
+  background-color: #1e4620;
+  color: #68d391;
+}
+
+[data-theme="dark"] .action-badge.action-deleted {
+  background-color: #4a1e1e;
+  color: #fc8181;
+}

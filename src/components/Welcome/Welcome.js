@@ -5,7 +5,6 @@ const Welcome = ({ nombre }) => {
         <div>
         <h2>Bienvenido, {nombre}!</h2>
             <p>Eres un crack</p>
-            <img src={rene} className="imagen" />
         </div>
     );
     } else {
