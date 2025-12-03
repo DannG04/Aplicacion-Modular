@@ -33,7 +33,6 @@ describe('Welcome - Tests Básicos', () => {
   // Verificar mensaje especial para "Desarrollador"
   test('debe mostrar mensaje especial para Desarrollador', () => {
     render(<Welcome nombre="Desarrollador" />);
-    
     const mensajeEspecial = screen.getByText('Eres un crack');
     expect(mensajeEspecial).toBeInTheDocument();
   });
@@ -41,10 +40,7 @@ describe('Welcome - Tests Básicos', () => {
   // Verificar que NO muestra mensaje por defecto para Desarrollador
   test('no debe mostrar mensaje por defecto para Desarrollador', () => {
     render(<Welcome nombre="Desarrollador" />);
-    
-    // queryByText devuelve null si no encuentra
     const mensajeDefecto = screen.queryByText('Este es un componente modularizado.');
-    // toBe(null) verifica que es exactamente null
     expect(mensajeDefecto).toBe(null);
   });
 
@@ -53,7 +49,6 @@ describe('Welcome - Tests Básicos', () => {
     const { container } = render(<Welcome nombre="Ana" />);
     
     const titulos = container.querySelectorAll('h2');
-    // toBe compara el número exacto
     expect(titulos.length).toBe(1);
   });
 
